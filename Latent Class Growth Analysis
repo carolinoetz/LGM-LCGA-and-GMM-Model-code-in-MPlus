@@ -1,0 +1,61 @@
+  TITLE: Latent Class Growth Analysis
+
+  DATA:
+      FILE IS rd_wide3_all2_v2.txt;
+
+
+  VARIABLE:
+
+  NAMES ARE ! same as previous code;
+
+      USEVARIABLES  ARE
+          IDS_T_0
+          IDS_T_3
+          IDS_T_6
+          IDS_T_9
+          IDS_T_12
+          IDS_T_15
+          IDS_T_18
+          IDS_T_21
+          IDS_T_24;
+
+      MISSING ARE ALL (-99);
+      IDVARIABLE IS id;
+      CLASSES = c(2);
+
+  ANALYSIS:
+        ESTIMATOR = MLR;         !the default for continuous data
+        PROCESSORS = 5;         
+
+        TYPE = MIXTURE;
+        LRTSTARTS = 0 0 700 300; !increase values when LRT (TECH 14) has provided a warning
+
+    MODEL:
+    %OVERALL%
+    int slope quad cubic| IDS_T_0@0 IDS_T_3@1 IDS_T_6@2
+                IDS_T_9@3 IDS_T_12@4 IDS_T_15@5 IDS_T_18@6
+                IDS_T_21@7 IDS_T_24@8;
+
+    int WITH slope;
+
+    int@0;  !we are fixing the variance to zero - so you are making them homogenous.
+    slope@0;
+
+    %c#1% 
+        [int];
+        [slope];
+
+
+    %c#2%
+        [int];
+        [slope];
+
+    PLOT:
+        TYPE = PLOT3;
+        SERIES = IDS_T_0(0) IDS_T_3(1) IDS_T_6(2)
+        IDS_T_9(3) IDS_T_12(4) IDS_T_15(5) IDS_T_18(6)
+        IDS_T_21(7) IDS_T_24(8);
+
+
+    OUTPUT:
+      STDYX TECH11 TECH14;
