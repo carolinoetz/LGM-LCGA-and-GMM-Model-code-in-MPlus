@@ -28,9 +28,9 @@ TITLE: Growth Mixture Model
         PROCESSORS = 5;         
 
         TYPE = MIXTURE;
-        LRTSTARTS = 0 0 700 300; !increase values when LRT (TECH 14) has provided a warning
-
-
+        STARTS = 500 20;
+        STITERATIONS = 20;
+        !LRTSTARTS = 0 0 20 5; !only add once optimal seed has been found to run TECH 14 
 
     MODEL:
     %OVERALL%
@@ -40,14 +40,11 @@ TITLE: Growth Mixture Model
 
     int WITH slope;
 
-    %c#1% !Asking Mplus to give us the average trajectory for each class
-        [int];
-        [slope];
-
+    %c#1% 
+      int; !slope;  !asking for intercept to vary within-class (not slope)
 
     %c#2%
-        [int];
-        [slope];
+    int;! slope;   !asking for intercept to vary within-class (not slope)
 
 
     PLOT:
