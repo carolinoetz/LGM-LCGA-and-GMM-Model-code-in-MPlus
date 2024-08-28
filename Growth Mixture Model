@@ -40,13 +40,6 @@ TITLE: Growth Mixture Model
 
     int WITH slope;
 
-    %c#1% 
-      int; !slope;  !asking for intercept to vary within-class (not slope)
-
-    %c#2%
-    int;! slope;   !asking for intercept to vary within-class (not slope)
-
-
     PLOT:
         TYPE = PLOT3;
         SERIES = IDS_T_0(0) IDS_T_3(1) IDS_T_6(2)
